@@ -1,45 +1,98 @@
 <?php
+namespace App\Controllers\Api;
 
-namespace App\Controllers;
-
+use App\Controllers\BaseController;
 use App\Models\UsuarioModel;
-use CodeIgniter\Controller;
+use App\Models\PersonaModel;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
-    public function loginView()
+    public function register()
     {
-        return view('auth/login');
-    }
+        $data = $this->request->getJSON(true);
 
-    public function login()
-    {
-        $email = $this->request->getPost('email');
-        $clave = $this->request->getPost('clave');
+        if (!$data) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Datos inválidos'
+            ])->setStatusCode(400);
+        }
 
+        $personaModel = new PersonaModel();
         $usuarioModel = new UsuarioModel();
-        $usuario = $usuarioModel->obtenerPorEmail($email);
 
-        if (!$usuario) {
-            return redirect()->back()->with('error', 'Usuario no encontrado');
-        }
-
-        if (!password_verify($clave, $usuario['clave'])) {
-            return redirect()->back()->with('error', 'Contraseña incorrecta');
-        }
-
-        session()->set([
-            'usuario_id' => $usuario['usuario_Id'],
-            'rol_id'     => $usuario['rol_Id'],
-            'logged_in'  => true
+        // Crear persona
+        $personaId = $personaModel->insert([
+            'nombre' => $data['nombre'],
+            'apellido_paterno' => $data['apellido_paterno'],
+            'apellido_materno' => $data['apellido_materno']
         ]);
 
-        return redirect()->to('/admin/dashboard');
-    }
+        // Crear usuario cliente (rol_Id = 2)
+        $usuarioModel->insert([
+            'email' => $data['email'],
+            'clave' => password_hash($data['password'], PASSWORD_DEFAULT),
+            'rol_Id' => 2,
+            'persona_Id' => $personaId,
+            'esta_Activo' => 1
+        ]);
 
-    public function logout()
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Cliente registrado correctamente'
+        ]);
+    }
+    
+    public function login()
     {
-        session()->destroy();
-        return redirect()->to('/login');
+        $data = $this->request->getJSON(true);
+    
+        if (!$data) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Datos inválidos'
+            ])->setStatusCode(400);
+        }
+    
+        if (empty($data['email']) || empty($data['password'])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Email y contraseña requeridos'
+            ])->setStatusCode(400);
+        }
+    
+        $usuarioModel = new UsuarioModel();
+        $usuario = $usuarioModel->obtenerPorEmail($data['email']);
+    
+        if (!$usuario) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Credenciales incorrectas'
+            ])->setStatusCode(401);
+        }
+    
+        if (!$usuario['esta_Activo']) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Usuario inactivo'
+            ])->setStatusCode(403);
+        }
+    
+        if (!password_verify($data['password'], $usuario['clave'])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Credenciales incorrectas'
+            ])->setStatusCode(401);
+        }
+    
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Login correcto',
+            'data' => [
+                'usuario_id' => $usuario['usuario_Id'],
+                'email' => $usuario['email'],
+                'rol_id' => $usuario['rol_Id']
+            ]
+        ]);
     }
 }

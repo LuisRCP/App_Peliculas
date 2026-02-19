@@ -5,75 +5,129 @@
     <title>Películas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap PRIMERO -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- TU CSS AL FINAL -->
+    <link href="<?= base_url('assets/css/app.css') ?>" rel="stylesheet">
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark px-3">
-    <span class="navbar-brand">
-        <i class="fa-solid fa-film"></i> Gestión de Películas
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-dark px-3" style="background:#0b0b0b;border-bottom:1px solid #222;">
+    <span class="navbar-brand fw-semibold">
+        <i class="fa-solid fa-film me-2"></i> Gestión de Películas
     </span>
-    <a href="<?= base_url('admin/dashboard') ?>" class="btn btn-secondary btn-sm">
+    <a href="<?= base_url('admin/dashboard') ?>" class="btn btn-outline-light btn-sm">
         <i class="fa-solid fa-arrow-left"></i> Volver
     </a>
 </nav>
 
 <div class="container mt-4">
 
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalCrear">
-        <i class="fa-solid fa-plus"></i> Nueva Película
-    </button>
+    <!-- ===== CARD ===== -->
+    <div class="card shadow-sm">
+        <div class="card-body">
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Imagen</th>
-                <th>Nombre</th>
-                <th>Género</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($peliculas as $p): ?>
-                <tr>
-                    <td>
-                        <?php if($p['imagen_url']): ?>
-                            <img src="<?= base_url($p['imagen_url']) ?>" width="60">
-                        <?php endif; ?>
-                    </td>
-                    <td><?= $p['nombre'] ?></td>
-                    <td><?= $p['genero'] ?></td>
-                    <td>
-                        <button class="btn btn-warning btn-sm"
-                            onclick="editarPelicula(<?= htmlspecialchars(json_encode($p)) ?>)">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="fa-solid fa-table me-2"></i>Listado de Películas
+                </h5>
 
-                        <a href="<?= base_url('admin/peliculas/delete/'.$p['pelicula_Id']) ?>"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('¿Eliminar esta película?')">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrear">
+                    <i class="fa-solid fa-plus"></i> Nueva Película
+                </button>
+            </div>
+
+            <!-- ===== TABLA ===== -->
+            <div class="table-responsive rounded-4 overflow-hidden">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th width="190">Imagen</th>
+                            <th>Nombre</th>
+                            <th>Género</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th width="140">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($peliculas as $p): ?>
+                            <tr>
+                                <td>
+                                    <?php if($p['imagen_url']): ?>
+                                        <img src="<?= base_url('public/' . $p['imagen_url']) ?>" class="movie-thumb">
+                                    <?php endif; ?>
+                                </td>
+
+                                <td class="fw-semibold"><?= $p['nombre'] ?></td>
+
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        <?= $p['genero'] ?>
+                                    </span>
+                                </td>
+
+                                <td style="max-width:320px;">
+                                    <?= strlen($p['descripcion']) > 90
+                                        ? substr($p['descripcion'], 0, 90) . '...'
+                                        : $p['descripcion']; ?>
+                                </td>
+
+                                <td>
+                                    <?php if($p['esta_Activo']): ?>
+                                        <span class="badge bg-success">Activa</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-danger">Inactiva</span>
+                                    <?php endif; ?>
+                                </td>
+
+                                <td>
+
+                                    <!-- Editar -->
+                                    <button class="btn btn-warning btn-sm"
+                                        onclick="editarPelicula(<?= htmlspecialchars(json_encode($p)) ?>)">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <!-- Toggle -->
+                                    <a href="<?= base_url('admin/peliculas/toggle/'.$p['pelicula_Id']) ?>"
+                                       class="btn btn-secondary btn-sm"
+                                       onclick="return confirm('¿Cambiar estado de la película?')">
+                                        <i class="fa-solid fa-power-off"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
-<!-- MODAL CREAR -->
+<!-- ================= MODAL CREAR ================= -->
 <div class="modal fade" id="modalCrear">
   <div class="modal-dialog">
     <div class="modal-content">
+
       <form action="<?= base_url('admin/peliculas/store') ?>" method="post" enctype="multipart/form-data">
 
         <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title"><i class="fa-solid fa-plus"></i> Nueva Película</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <h5 class="modal-title">
+                <i class="fa-solid fa-plus"></i> Nueva Película
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
 
         <div class="modal-body">
@@ -108,14 +162,17 @@
   </div>
 </div>
 
-<!-- MODAL EDITAR -->
+<!-- ================= MODAL EDITAR ================= -->
 <div class="modal fade" id="modalEditar">
   <div class="modal-dialog">
     <div class="modal-content">
+
       <form id="formEditar" method="post" enctype="multipart/form-data">
 
         <div class="modal-header bg-warning">
-            <h5 class="modal-title"><i class="fa-solid fa-pen"></i> Editar Película</h5>
+            <h5 class="modal-title">
+                <i class="fa-solid fa-pen"></i> Editar Película
+            </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 

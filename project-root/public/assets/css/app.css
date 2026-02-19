@@ -1,0 +1,590 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: white;
+    background: black;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/img/cuenta/background.jpg);
+}
+
+/* --------------------------HEADER--------------------------------------------------------- */
+
+.contenido{
+    width: 100%;
+    height: 100vh;
+}
+
+nav .logo{
+    position: relative;
+    display: flex;
+    padding-top: 25px;
+    padding-left: 3%;
+    width: 210px;
+    cursor: pointer;
+    max-width: 500px;
+}
+
+/* ----------------------------CAJA DEL FORMULARIO------------------------------------------- */
+
+.caja{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 40%;
+    justify-content: center;
+    max-width: 600px;
+    border-radius: 3px;
+    align-self: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+    padding-left: 70px;
+    padding-right: 70px;
+    margin: 2% 32% 70px 32%;
+}
+
+.caja h2{
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.caja .form{
+    display: flex;
+    flex-direction: column;
+}
+
+.caja .form input{
+    border: none;
+    padding: 20px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    background-color: #333;
+    border-radius: 5px;
+}
+/* Esto es para que el color de lo que escribamos y se quede plasmado en el formulario sea con las
+letras en blanco */
+input, select,textarea {
+    color: white;
+}
+/* Esto es para que el color de lo que escribamos en el momento durante el que escribimos,
+sea con las letras en blanco */
+textarea:focus, input:focus {
+    color: white;
+}
+
+.caja button{
+    border: none;
+    padding: 15px 35%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    background-color: #e50914;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.caja .checkbox{
+    display: flex;
+    align-items: center;
+    color: #b3b3b3;
+    font-size: 14px;
+    justify-content: space-between;
+    margin: 10px 0px;
+    margin-bottom: 50px;
+}
+
+.recordar{
+    display: inline-flex;
+}
+
+.recordar label{
+    margin-left: 3px;
+}
+
+#checkbox1 {
+    accent-color: #b3b3b3; /* Esto consigue que al hacer un click en check, podamos ver el check en gris al ponerse el tick */
+}
+
+.caja .checkbox div p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.caja .checkbox div p:hover {
+    text-decoration: underline;
+}
+
+.caja .subscripcion p{
+    margin: 15px 0px 0 0px;
+    color: gray;
+}
+
+.caja .subscripcion p span{
+    color: white;
+    font-weight: 600;
+}
+
+.caja .subscripcion p+p{
+    font-size: 13px;
+}
+
+.caja .subscripcion a{
+    color: #0071eb;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.caja .subscripcion a:hover{
+    text-decoration: underline;
+}
+
+/* ----------------------------------------FOOTER-------------------------------------------------------------- */
+
+footer{
+    padding: 50px 15% 10px;
+    color: #777;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin-top: 10%;
+}
+
+footer p {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 2%;
+    max-width: 900px;
+}
+
+footer ul{
+    /* Con estos dos elementos, conseguimos convertir las columnas de elementos li, a listas horizontales */
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2%;
+    height: 10vh;
+    padding: 0px 15px;
+}
+
+footer ul li{
+    font-size: 14px;
+    /* Con este elemento, asignamos el % que ocupa cada elemento en la flexbox */
+    width: 25%;
+    list-style: none; /* Esto le quita los puntos de lista ordenada a los elementos li */
+}
+
+footer .links a {
+    text-decoration: none;
+    color: #777;
+}
+
+footer .links a:hover{
+    text-decoration: underline;
+}
+
+
+/* -----------------------ARREGLOS DE CSS PARA PANTALLAS PEQUEÑAS--------------------------------------------------------------- */
+@media only screen and (max-width:600px) {
+    /* -----------------------ARREGLOS DEL HEADER Y BODY--------------------------------------- */
+    body{
+        background-image: none;
+    }
+    
+    nav .logo {
+        padding-left: 3%;
+        padding-top: 3%;
+        width: 40%;
+    }
+
+    .caja {
+        width: 105%;
+        padding-top: 5%;
+        padding-bottom: 3%;
+        padding-left: 3%;
+        padding-right: 3%px;
+        margin: 2% 3% 2% 3%;
+    }
+
+    
+    .caja .form input {
+        padding: 15px;
+        margin-bottom: 3%;
+        }
+
+    .caja button {
+        padding: 15px 37%;
+    }
+
+    
+    .caja .subscripcion{
+        margin-top: -20px;
+    }
+    
+    .caja .subscripcion p span {
+        font-weight: 300;        
+    }
+
+    footer {
+        padding: 5% 7% 3%;
+        border-top: 2px solid #333;
+    }
+    
+    footer p {
+        font-size: 15px;
+        margin-bottom: 7%;
+    }
+    
+    footer ul {
+        margin-bottom: 5%;
+        padding: 0px;
+        height: 15vh;
+    }
+    
+    footer ul li {
+        font-size: 12px;
+        width: 50%;
+    }
+    
+
+}
+
+.card {
+    background: #111;
+    border: 1px solid #222;
+}
+
+.table {
+    background: #111;
+}
+
+.table thead {
+    background: #1a1a1a;
+}
+
+.btn-primary {
+    background: rgb(219, 0, 1);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: rgb(180, 0, 0);
+}   
+
+body.dark-cinema {
+    background:
+        linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.85)),
+        url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+.navbar-dark-pro {
+    background:#0b0b0b !important;
+    border-bottom:1px solid #222;
+}
+
+.card {
+    background:#111;
+    border:1px solid #222;
+    color:#fff;
+    border-radius:14px;
+}
+
+.card.shadow-sm {
+    box-shadow: 0 10px 30px rgba(0,0,0,.45) !important;
+}   
+
+.table thead {
+    background:#1a1a1a;
+    color:#fff;
+}
+
+.table-hover tbody tr:hover {
+    background:#151515;
+}
+
+.badge {
+    font-weight:500;
+    letter-spacing:.3px;
+}
+
+.btn-primary {
+    background: rgb(219,0,1);
+    border:none;
+    font-weight:600;
+}
+
+.btn-primary:hover {
+    background: rgb(180,0,0);
+}
+
+.modal-content {
+    background: rgba(20,20,20,.95);
+    border:1px solid #2a2a2a;
+    color:#fff;
+    border-radius:16px;
+    backdrop-filter: blur(10px);
+}
+
+.modal-header {
+    border-bottom:1px solid #2a2a2a;
+}
+
+.modal-footer {
+    border-top:1px solid #2a2a2a;
+}
+
+.modal-title {
+    font-weight:600;
+}
+
+.modal .form-control,
+.modal .form-select {
+    background:#111;
+    border:1px solid #333;
+    color:#fff;
+}
+
+.modal .form-control:focus,
+.modal .form-select:focus {
+    background:#111;
+    color:#fff;
+    border-color:rgb(219,0,1);
+    box-shadow:0 0 0 .15rem rgba(219,0,1,.2);
+}
+
+.input-group-text {
+    background:#1a1a1a;
+    border-color:#333;
+    color:#aaa;
+}
+
+.login-card {
+    width:420px;
+    background: rgba(20,20,20,.75);
+    backdrop-filter: blur(14px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    box-shadow:0 25px 60px rgba(0,0,0,.6);
+}
+
+.alert {
+    border:none;
+    border-radius:10px;
+}
+
+.table {
+    color: #e5e7eb;
+    background: transparent;
+}
+
+.table thead th {
+    background: #111827;
+    color: #e5e7eb;
+    border-bottom: 1px solid #2a2a2a;
+    font-weight: 600;
+}
+
+.table tbody tr {
+    background: #0f0f0f;
+    transition: all .15s ease;
+}
+
+.table tbody tr:hover {
+    background: #1a1a1a;
+}
+
+.table td {
+    border-color: #2a2a2a;
+}
+
+.badge {
+    padding: 6px 10px;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.modal-content {
+    background: #0b0b0b;
+    border: 1px solid #222;
+    border-radius: 14px;
+    color: #e5e7eb;
+}
+
+.modal-header {
+    border-bottom: 1px solid #222;
+}
+
+.modal-footer {
+    border-top: 1px solid #222;
+}
+
+.modal-backdrop.show {
+    opacity: 0.7;
+}
+
+.form-control,
+.form-select {
+    background: #0f0f0f;
+    border: 1px solid #2a2a2a;
+    color: #e5e7eb;
+    border-radius: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: #0f0f0f;
+    border-color: #e50914;
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(229, 9, 20, 0.25);
+}
+
+.form-control::placeholder {
+    color: #6b7280;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: #e50914;
+    border-color: #e50914;
+}
+
+.btn-primary:hover {
+    background: #f40612;
+    border-color: #f40612;
+}
+
+.btn-success {
+    background: #16a34a;
+    border-color: #16a34a;
+}
+
+.btn-warning {
+    color: #111;
+}
+
+.card {
+    background: #0b0b0b;
+    border: 1px solid #222;
+    border-radius: 14px;
+    color: #e5e7eb;
+}
+
+.navbar {
+    backdrop-filter: blur(6px);
+}
+
+.table thead th {
+    background: #0f172a;
+    color: #cbd5e1;
+    font-size: 14px;
+    letter-spacing: .3px;
+}
+
+.table tbody tr {
+    background: #0b0b0b;
+}
+
+.table tbody tr:hover {
+    background: #111827;
+}
+
+.movie-thumb {
+    width: 170px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #222;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.movie-thumb:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0,0,0,.6);
+}
+
+.badge.bg-secondary {
+    background: #374151 !important;
+    color: #e5e7eb;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 999px;
+}
+
+
+td .btn-sm {
+    margin-right: 6px;
+}
+
+td .btn-sm:last-child {
+    margin-right: 0;
+}
+
+.card-body h5 {
+    color: #e5e7eb;
+}
+
+.table td {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+/* =========================================
+   NAVBAR APP
+========================================= */
+.app-navbar {
+    background: #0b0b0b;
+    border-bottom: 1px solid #222;
+}
+
+/* =========================================
+   DIVIDER
+========================================= */
+.app-divider {
+    border-color: #222;
+}
+
+/* =========================================
+   CARDS DASHBOARD
+========================================= */
+.app-card {
+    background: #0b0b0b;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    transition: all .25s ease;
+}
+
+.app-card:hover {
+    transform: translateY(-4px);
+    border-color: #374151;
+    box-shadow: 0 12px 30px rgba(0,0,0,.45);
+}
+
+/* =========================================
+   ICON CIRCLE
+========================================= */
+.app-icon-circle {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    border-radius: 16px;
+    background: rgba(59,130,246,.15);
+    color: #60a5fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+
+.app-icon-circle.success {
+    background: rgba(16,185,129,.15);
+    color: #34d399;
+}

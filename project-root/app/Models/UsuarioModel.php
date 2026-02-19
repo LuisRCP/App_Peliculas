@@ -27,4 +27,12 @@ class UsuarioModel extends Model
                     ->where('esta_Activo', 1)
                     ->first();
     }
+
+    public function obtenerClientes()
+    {
+        return $this->select('usuario.*, persona.nombre, persona.apellido_paterno, persona.apellido_materno')
+                    ->join('persona', 'persona.persona_Id = usuario.persona_Id')
+                    ->where('usuario.rol_Id', 2)
+                    ->findAll();
+    }
 }

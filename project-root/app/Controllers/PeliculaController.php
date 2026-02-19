@@ -40,7 +40,7 @@ class PeliculaController extends BaseController
 
         if ($file && $file->isValid()) {
             $nombreImagen = $file->getRandomName();
-            $file->move('public/uploads/peliculas', $nombreImagen);
+            $file->move(FCPATH . 'uploads/peliculas', $nombreImagen);        
         }
 
         $this->peliculaModel->save([
@@ -92,7 +92,25 @@ class PeliculaController extends BaseController
     // ELIMINAR
     public function delete($id)
     {
-        $this->peliculaModel->delete($id);
+        $this->peliculaModel->update($id, [
+            'esta_Activo' => 0
+        ]);
+
+        return redirect()->to('/admin/peliculas');
+    }
+
+    public function toggle($id)
+    {
+        $pelicula = $this->peliculaModel->find($id);
+
+        if (!$pelicula) {
+            return redirect()->to('/admin/peliculas');
+        }
+
+        $this->peliculaModel->update($id, [
+            'esta_Activo' => $pelicula['esta_Activo'] ? 0 : 1
+        ]);
+
         return redirect()->to('/admin/peliculas');
     }
 }
